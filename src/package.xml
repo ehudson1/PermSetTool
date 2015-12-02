@@ -5,6 +5,7 @@
         <members>ApexPagesController</members>
         <members>FieldsController</members>
         <members>ObjectandFieldsController</members>
+        <members>ObjectsController</members>
         <name>ApexClass</name>
     </types>
     <types>
