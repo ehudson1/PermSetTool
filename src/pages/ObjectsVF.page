@@ -1,0 +1,129 @@
+<apex:page controller="ObjectsController">
+    <apex:sectionHeader title="This page displays all Custom Objects and to which Permission Sets they are assigned."/>
+
+ <script type="text/javascript">
+    function createPSNRead(PSN, ON) {
+                 Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.ObjectsController.ChangeReadPerm}',
+                          PSN, ON,
+                         function(result, event){
+                            if(event.status){
+                                alert(result);
+                            }else if(event.type === 'exception'){
+                                alert(result+' '+event.message);
+                            }else {
+                                alert(result+' '+event.message);
+                            }
+                             window.location.reload();
+                           },
+                        {escape:true}
+                       );
+    }
+    function createPSNEdit(PSN, ON) {
+                 Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.ObjectsController.ChangeEditPerm}',
+                          PSN, ON,
+                         function(result, event){
+                            if(event.status){
+                                alert(result);
+                            }else if(event.type === 'exception'){
+                                alert(result+' '+event.message);
+                            }else {
+                                alert(result+' '+event.message);
+                            }
+                             window.location.reload();
+                           },
+                        {escape:true}
+                       );
+    }
+    function createPSNCreate(PSN, ON) {
+                 Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.ObjectsController.ChangeCreatePerm}',
+                          PSN, ON,
+                         function(result, event){
+                            if(event.status){
+                                alert(result);
+                            }else if(event.type === 'exception'){
+                                alert(result+' '+event.message);
+                            }else {
+                                alert(result+' '+event.message);
+                            }
+                             window.location.reload();
+                           },
+                        {escape:true}
+                       );
+    }
+    function createPSNDelete(PSN, ON) {
+                 Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.ObjectsController.ChangeDeletePerm}',
+                          PSN, ON,
+                         function(result, event){
+                            if(event.status){
+                                alert(result);
+                                window.location.reload();
+                            }else if(event.type === 'exception'){
+                                alert(result+' '+event.message);
+                                window.location.reload();
+                            }else {
+                                alert(result+' '+event.message);
+                                window.location.reload();
+                            }
+                           },
+                        {escape:true}
+                       );
+    }
+    </script>
+    <apex:form >
+    <apex:pageBlock title="Click to Assign Apex Pages to Permission Sets">
+        <apex:pageBlockTable value="{!MapofObjectPermissionsRead}" var="bm" id="ObjectName">
+            <apex:column >
+                <apex:outputText value="{!bm}"/>
+            </apex:column>
+            <apex:repeat value="{!PSs}" var="ps" id="PSetName">
+                <apex:column headerValue="{!ps.Name}">
+                    <apex:inputCheckbox value="{!MapofObjectPermissionsRead[bm][ps]}" onclick="createPSNRead('{!ps.Name}','{!bm}')"/><br/>
+                </apex:column>
+            </apex:repeat>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="This is for Assigning and Removing Objects with Edit Permissions" > 
+        <apex:pageBlockTable value="{!MapofObjectPermissionsEdit}" var="bm" id="ObjectName">
+            <apex:column >
+                <apex:outputText value="{!bm}"/>
+            </apex:column>
+            <apex:repeat value="{!PSs}" var="ps" id="PSetName">
+                <apex:column headerValue="{!ps.Name}">
+                    <apex:inputCheckbox value="{!MapofObjectPermissionsEdit[bm][ps]}" onclick="createPSNEdit('{!ps.Name}','{!bm}')"/><br/>
+                </apex:column>
+            </apex:repeat>
+            </apex:pageBlockTable>
+          </apex:pageBlock>
+    
+    <apex:pageBlock title="This is for Assigning and Removing Objects with Create Permissions" > 
+        <apex:pageBlockTable value="{!MapofObjectPermissionsCreate}" var="bm" id="ObjectName">
+            <apex:column >
+                <apex:outputText value="{!bm}"/>
+            </apex:column>
+            <apex:repeat value="{!PSs}" var="ps" id="PSetName">
+                <apex:column headerValue="{!ps.Name}">
+                    <apex:inputCheckbox value="{!MapofObjectPermissionsCreate[bm][ps]}" onclick="createPSNCreate('{!ps.Name}','{!bm}')"/><br/>
+                </apex:column>
+            </apex:repeat>
+            </apex:pageBlockTable>
+          </apex:pageBlock>
+
+<apex:pageBlock title="This is for Assigning and Removing Objects with Delete Permissions" > 
+        <apex:pageBlockTable value="{!MapofObjectPermissionsDelete}" var="bm" id="ObjectName">
+            <apex:column >
+                <apex:outputText value="{!bm}"/>
+            </apex:column>
+            <apex:repeat value="{!PSs}" var="ps" id="PSetName">
+                <apex:column headerValue="{!ps.Name}">
+                    <apex:inputCheckbox value="{!MapofObjectPermissionsDelete[bm][ps]}" onclick="createPSNDelete('{!ps.Name}','{!bm}')"/><br/>
+                </apex:column>
+            </apex:repeat>
+            </apex:pageBlockTable>
+          </apex:pageBlock>
+        </apex:form>
+</apex:page>
