@@ -1,0 +1,87 @@
+<apex:page controller="FieldsController">
+    <apex:sectionHeader title="This page displays all editable Fields for Custom Objects and to which Permission Sets they are assigned."/>
+
+    <script type="text/javascript">
+    Visualforce.remoting.timeout = 120000; // Set timeout at page level
+
+    function createPSNRead(PSN, FN) {
+        alert('The relationship between the Field "'+FN+'" and the Permission Set "'+PSN+'" has been changed.');
+                 Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.FieldsController.dostuffRead}',
+                          PSN, FN,
+                         function(result, event){
+                            if(event.status){}
+                             window.location.reload();
+                           },
+                        {escape:true}
+                       );
+    }
+    function createPSNEdit(PSN, FN) {
+        alert('The relationship between the Field "'+FN+'" and the Permission Set "'+PSN+'" has been changed');
+                 Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.FieldsController.dostuffEdit}',
+                          PSN, FN,
+                         function(result, event){
+                            if(event.status){}
+                             window.location.reload();
+                           },
+                        {escape:true}
+                       );
+    }
+    </script>
+    <!--<apex:form >
+        <apex:pageBlock title="Display Fields that were Last Modified by specified User">
+           <apex:pageBlockSection >
+      			<apex:selectList value="{!selectedUser}" size="1" label="Fields Last Modified By: ">
+          			<apex:selectOptions value="{!UserList}">-->
+                        <!--<apex:actionSupport event="onChange" reRender="TableContainer"/>-->
+          			<!--</apex:selectOptions>
+      			</apex:selectList>
+               
+               <apex:commandButton value="Display Fields" action="{!test}" rerender="TableContainer"/>
+			</apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>-->
+
+    <apex:form >
+        <apex:outputPanel id="TableContainer">
+        <apex:pageBlock title="Click to Assign Read Field Permissions to Permission Sets" > 
+            
+        <apex:outputPanel id="out1">
+            <apex:pageBlockSection >
+                <apex:pageBlockTable value="{!MapofFieldPermissionsRead}" var="bm" id="FieldName">
+            <apex:column >
+                <apex:outputText value="{!bm}"/>
+            </apex:column>
+            <apex:repeat value="{!PSs}" var="ps" id="PSetName">
+                <apex:column headerValue="{!ps.Name}">
+                    <apex:inputCheckbox value="{!MapofFieldPermissionsRead[bm][ps]}" onclick="createPSNRead('{!ps.Name}','{!bm}')"/><br/>
+                </apex:column>
+            </apex:repeat>
+            </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                </apex:outputPanel>
+                
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="Edit Permissions" > 
+            
+        <apex:outputPanel id="out2">
+            <apex:pageBlockSection >
+                <apex:pageBlockTable value="{!MapofFieldPermissionsEdit}" var="bm" id="FieldName">
+            <apex:column >
+                <apex:outputText value="{!bm}"/>
+            </apex:column>
+            <apex:repeat value="{!PSs}" var="ps" id="PSetName">
+                <apex:column headerValue="{!ps.Name}">
+                    <apex:inputCheckbox value="{!MapofFieldPermissionsEdit[bm][ps]}" onclick="createPSNEdit('{!ps.Name}','{!bm}')"/><br/>
+                </apex:column>
+            </apex:repeat>
+            </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                </apex:outputPanel>
+                
+          </apex:pageBlock>
+        </apex:outputPanel>
+        </apex:form>
+</apex:page>

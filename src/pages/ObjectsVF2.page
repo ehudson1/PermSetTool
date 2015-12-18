@@ -1,0 +1,167 @@
+<apex:page controller="ObjectandFieldsController">
+  <script type="text/javascript">
+    function createPSNReadOb(PSN, ON) {    
+        Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.ObjectandFieldsController.ChangeReadPermOb}',
+                          PSN, ON,
+                         function(result, event){
+                            if(event.status){
+                                alert(result);
+                            }else if(event.type === 'exception'){
+                                alert(result+': '+event.message);
+                            }else {
+                                alert(result+': '+event.message);
+                            }
+                             window.location.reload();
+                           },
+                        {escape:true}
+                       );
+    }  
+    function createPSNEditOb(PSN, ON) {
+                 Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.ObjectandFieldsController.ChangeEditPermOb}',
+                          PSN, ON,
+                         function(result, event){
+                            if(event.status){
+                                alert(result);
+                            }else if(event.type === 'exception'){
+                                alert(result+': '+event.message);
+                            }else {
+                                alert(result+': '+event.message);
+                            }
+                             window.location.reload();
+                           },
+                        {escape:true}
+                       );
+    }  
+    function createPSNCreateOb(PSN, ON) {
+                 Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.ObjectandFieldsController.ChangeCreatePermOb}',
+                          PSN, ON,
+                         function(result, event){
+                            if(event.status){
+                                alert(result);
+                            }else if(event.type === 'exception'){
+                                alert(result+': '+event.message);
+                            }else {
+                                alert(result+': '+event.message);
+                            }
+                             window.location.reload();
+                           },
+                        {escape:true}
+                       );
+    }  
+    function createPSNDeleteOb(PSN, ON) {
+                 Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.ObjectandFieldsController.ChangeDeletePermOb}',
+                          PSN, ON,
+                         function(result, event){
+                            if(event.status){
+                                alert(result);
+                            }else if(event.type === 'exception'){
+                                alert(result+': '+event.message);
+                            }else {
+                                alert(result+': '+event.message);
+                            }
+                             window.location.reload();
+                           },
+                        {escape:true}
+                       );
+    }  
+    function createPSNReadField(PSN, FN) {
+                 Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.ObjectandFieldsController.changeReadPermField}',
+                          PSN, FN,
+                         function(result, event){
+                            if(event.status){
+                                alert(result);
+                            }else if(event.type === 'exception'){
+                                alert(result+': '+event.message);
+                            }else {
+                                alert(result+': '+event.message);
+                            }
+                             window.location.reload();
+                           },
+                        {escape:true}
+                       );
+    } 
+    function createPSNEditField(PSN, FN) {
+                 Visualforce.remoting.Manager.invokeAction(
+                           '{!$RemoteAction.ObjectandFieldsController.changeEditPermField}',
+                          PSN, FN,
+                         function(result, event){
+                            if(event.status){
+                                alert(result);
+                            }else if(event.type === 'exception'){
+                                alert(result+': '+event.message);
+                            }else {
+                                alert(result+': '+event.message);
+                            }
+                             window.location.reload();
+                           },
+                        {escape:true}
+                       );
+    } 
+</script>
+    <apex:form >
+        <apex:pageBlock title="1. Choose a Permission Set">
+           <apex:pageBlockSection >
+      			<apex:selectList value="{!chosenPermSetNames}" label="Choose the Permission Set: ">
+                    <!--multiselect="true"-->
+          		   <!--<apex:actionSupport event="onChange" action="{!test}" reRender="out"/>-->
+                    <apex:selectOptions value="{!listofpermsets}"/>
+      			</apex:selectList>
+               <apex:commandButton value="Display Object Assignments for Perm Set" action="{!test}" rerender="out"/>
+			</apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    
+    <apex:form >
+    	<apex:outputPanel id="out">
+        <apex:pageBlock title="2. Click to Assign Objects to Permission Set">
+        	<apex:pageBlockTable value="{!ListOfObjects}" var="ob" id="ObjectName">
+            <apex:column >
+                <apex:outputText value="{!ob}" />
+            </apex:column>
+            <apex:column headerValue="Permission to Read">
+                <apex:inputCheckbox value="{!MapofReadPermissionsOb[ob]}" onclick="createPSNReadOb('{!chosenPermSetNames}','{!ob}')"/><br/>
+            </apex:column>
+            <apex:column headerValue="Permission to Edit">
+                <apex:inputCheckbox value="{!MapofEditPermissionsOb[ob]}" onclick="createPSNEditOb('{!chosenPermSetNames}','{!ob}')"/><br/>
+            </apex:column>
+            <apex:column headerValue="Permission to Create">
+                <apex:inputCheckbox value="{!MapofCreatePermissionsOb[ob]}" onclick="createPSNCreateOb('{!chosenPermSetNames}','{!ob}')"/><br/>
+            </apex:column>
+            <apex:column headerValue="Permission to Delete">
+                <apex:inputCheckbox value="{!MapofDeletePermissionsOb[ob]}" onclick="createPSNDeleteOb('{!chosenPermSetNames}','{!ob}')"/><br/>
+            </apex:column>
+            <apex:column headerValue="Drill down into fields">
+                <apex:commandLink action="{!test}" value="View Fields for {!ob}" reRender="out2">
+                    <apex:param name="selectedobject" assignTo="{!selectedobject}" value="{!ob}"/>
+                </apex:commandLink>
+            </apex:column>
+                <apex:commandButton onclick=""/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+       </apex:outputPanel>
+    </apex:form>
+   
+    <apex:form >
+        <apex:outputPanel id="out2">
+        <apex:pageBlock title="3. Click to Assign Fields for object {!selectedObject} to Permission Set" > 
+                <apex:pageBlockTable value="{!FieldName}" var="fn" id="FieldName">
+            <apex:column >
+                <apex:outputText value="{!fn}"/>
+            </apex:column>
+            <apex:column headerValue="Permission to Read">
+                <apex:inputcheckbox value="{!MapofReadPermissionsField[fn]}" onclick="createPSNReadField('{!chosenPermSetNames}','{!fn}')"/>
+            </apex:column>
+            <apex:column headerValue="Permission to Edit">
+                <apex:inputcheckbox value="{!MapofEditPermissionsField[fn]}" onclick="createPSNEditField('{!chosenPermSetNames}','{!fn}')"/>
+            </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        </apex:outputPanel>
+        </apex:form>
+    
+</apex:page>
