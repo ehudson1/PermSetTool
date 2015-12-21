@@ -349,11 +349,11 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>ManageEmailClientConfig</name>
+        <name>ManageEncryptionKeys</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>ManageEncryptionKeys</name>
+        <name>ManageEmailClientConfig</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
