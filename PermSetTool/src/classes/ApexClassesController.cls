@@ -2,7 +2,6 @@ public with sharing class ApexClassesController {
     public string selectedUser {get; set;}
     public PageReference test(){
         return null;
-        System.debug('Change made');
     }
     public List<SelectOption> UserList {
         get{

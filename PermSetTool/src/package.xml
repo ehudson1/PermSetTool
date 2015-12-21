@@ -3,16 +3,12 @@
     <types>
         <members>ApexClassesController</members>
         <members>ApexPagesController</members>
-        <members>FieldsController</members>
         <members>ObjectandFieldsController</members>
-        <members>ObjectsController</members>
         <name>ApexClass</name>
     </types>
     <types>
         <members>ApexClassesVF</members>
         <members>ApexPagesVF</members>
-        <members>FieldsVF</members>
-        <members>ObjectsVF</members>
         <members>ObjectsVF2</members>
         <name>ApexPage</name>
     </types>
@@ -21,8 +17,14 @@
         <name>CustomApplication</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Apex_Class_Assignment</members>
+        <members>Object_and_Field_Assignment</members>
+        <members>VF_Page_Assignment</members>
         <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Admin</members>
+        <name>Profile</name>
     </types>
     <version>35.0</version>
 </Package>
