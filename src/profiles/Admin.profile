@@ -348,7 +348,7 @@
         <name>ManageDynamicDashboards</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ManageEncryptionKeys</name>
     </userPermissions>
     <userPermissions>
